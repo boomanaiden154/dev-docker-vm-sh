@@ -48,5 +48,7 @@ RUN cmake -G Ninja \
 	-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 	-DZLIB_ROOT=/usr/include \
         -DZLIB_LIBRARY=/usr/lib/x86_64-linux-gnu/libz.so \
+	-DCMAKE_C_FLAGS="-Xclang -fembed-bitcode=all" \
+	-DCMAKE_CXX_FLAGS="-Xclang -fembed-bitcode=all" \
 	/llvm-project/llvm
 RUN cmake --build .
