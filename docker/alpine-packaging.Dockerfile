@@ -1,6 +1,10 @@
 FROM alpine:edge
-RUN printf "\nhttps://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-RUN printf "\nhttps://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN echo "/home/builder/packages/main" > /etc/apk/repositories && \
+    echo "/home/builder/packages/community" >> /etc/apk/repositories && \
+    echo "/home/builder/packages/testing" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 RUN apk upgrade --available && apk add alpine-sdk vim sudo
 RUN adduser -D -s /bin/sh builder
 RUN echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
