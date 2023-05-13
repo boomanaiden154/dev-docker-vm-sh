@@ -12,6 +12,5 @@ cmake -GNinja \
     -DLLVM_USE_LINKER="lld" \
     -DLLVM_BUILD_DOCS=true \
     -DLLVM_ENABLE_SPHINX=true \
-    -DSPHINX_OUTPUT_MAN=false \
     ../llvm
 ninja
