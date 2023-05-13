@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS llvm-development-base
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     python3-distutils \
@@ -38,7 +38,20 @@ RUN apt-get update && \
     doxygen \
     python3-sphinx \
     python3-recommonmark \
-    lld
+    php \
+    php-curl
+
+FROM llvm-development-base AS toolchain-build
+COPY ./sh/build-llvm-optimized.sh /
+RUN /build-llvm-optimized.sh
+
+FROM llvm-development-base AS llvm-development
+RUN git clone https://github.com/phacility/arcanist.git
+COPY --from=toolchain-build /llvm-install /llvm-install
+ENV CCACHE_DIR=/ccache
+ENV PATH="$PATH:/llvm-install/bin:/arcanist/bin"
+RUN ln -sf /llvm-install/bin/clang /usr/bin/cc && \
+  ln -sf /llvm-install/bin/clang++ /usr/bin/c++ && \
+  ln -sf /llvm-install/bin/ld.lld /usr/bin/ld
 COPY ./sh /sh-utils
 RUN /sh-utils/configure-git.sh
-ENV CCACHE_DIR=/ccache
