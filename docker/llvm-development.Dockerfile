@@ -1,4 +1,5 @@
 FROM ubuntu:22.04 AS llvm-development-base
+# TODO(boomanaiden154): add perf dependencies to the command below
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     python3-distutils \
