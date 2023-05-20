@@ -2,6 +2,7 @@ set -e
 git clone https://github.com/llvm/llvm-project
 mkdir llvm-project/build
 cd llvm-project/build
+# TODO(boomanaiden154): make sure clang-format gets built and installed
 cmake -G Ninja /llvm-project/llvm \
   -C /llvm-project/clang/cmake/caches/BOLT-PGO.cmake \
   -DBOOTSTRAP_LLVM_ENABLE_LLD=ON \
