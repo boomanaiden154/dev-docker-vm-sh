@@ -2,7 +2,6 @@ set -e
 git clone https://github.com/llvm/llvm-project
 mkdir llvm-project/build
 cd llvm-project/build
-# TODO(boomanaiden154): make sure clang-format gets built and installed
 cmake -G Ninja /llvm-project/llvm \
   -C /llvm-project/clang/cmake/caches/BOLT-PGO.cmake \
   -DBOOTSTRAP_LLVM_ENABLE_LLD=ON \
@@ -11,7 +10,7 @@ cmake -G Ninja /llvm-project/llvm \
   -DLLVM_ENABLE_RUNTIMES="compiler-rt" \
   -DCMAKE_INSTALL_PREFIX="/llvm-install" \
   -DLLVM_ENABLE_PROJECTS="bolt;clang;lld;lldb;clang-tools-extra" \
-  -DLLVM_DISTRIBUTION_COMPONENTS="lld;clangd;compiler-rt;lldb;liblldb;lldb-argdumper;lldb-server" \
+  -DLLVM_DISTRIBUTION_COMPONENTS="lld;clangd;compiler-rt;lldb;liblldb;lldb-argdumper;lldb-server;clang-format" \
   -DCLANG_DEFAULT_LINKER="lld"
 ninja stage2-clang-bolt stage2-install-distribution
 ninja install-distribution

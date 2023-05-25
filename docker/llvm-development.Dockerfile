@@ -1,5 +1,4 @@
 FROM ubuntu:22.04 AS llvm-development-base
-# TODO(boomanaiden154): add perf dependencies to the command below
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
     python3-distutils \
@@ -40,7 +39,13 @@ RUN apt-get update && \
     python3-sphinx \
     python3-recommonmark \
     php \
-    php-curl
+    php-curl \
+    flex \
+    bison \
+    libelf-dev \
+    libdw-dev \
+    libtraceevent-dev \
+    libunwind-dev
 
 FROM llvm-development-base AS toolchain-build
 COPY ./sh/build-llvm-optimized.sh /
