@@ -6,6 +6,8 @@ RUN echo "/home/builder/packages/main" > /etc/apk/repositories && \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 RUN apk upgrade --available && apk add alpine-sdk vim sudo
+# Setup a cache so that we don't have to pull packages from the network every time
+RUN mkdir /apk-cache && ln -s /apk-cache /etc/apk/cache
 RUN adduser -D -s /bin/sh builder
 RUN echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
 RUN addgroup builder abuild
