@@ -36,8 +36,6 @@ RUN apt-get update && \
     git \
     vim \
     doxygen \
-    python3-sphinx \
-    python3-recommonmark \
     php \
     php-curl \
     flex \
@@ -45,17 +43,19 @@ RUN apt-get update && \
     libelf-dev \
     libdw-dev \
     libtraceevent-dev \
-    libunwind-dev
+    libunwind-dev \
+    curl
 
 FROM llvm-development-base AS toolchain-build
 COPY ./sh/build-llvm-optimized.sh /
 RUN /build-llvm-optimized.sh
 
 FROM llvm-development-base AS llvm-development
-RUN git clone https://github.com/phacility/arcanist.git
 COPY --from=toolchain-build /llvm-install /llvm-install
+RUN curl -L https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/docs/requirements.txt > /docs-requirements.txt \
+  && pip3 install -r /docs-requirements.txt \
+  && rm /docs-requirements.txt
 ENV CCACHE_DIR=/ccache
-ENV PATH="$PATH:/llvm-install/bin:/arcanist/bin"
 RUN ln -sf /llvm-install/bin/clang /usr/bin/cc && \
   ln -sf /llvm-install/bin/clang++ /usr/bin/c++ && \
   ln -sf /llvm-install/bin/ld.lld /usr/bin/ld
