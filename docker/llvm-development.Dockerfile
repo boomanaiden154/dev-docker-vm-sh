@@ -55,7 +55,7 @@ COPY --from=toolchain-build /llvm-install /llvm-install
 RUN curl -L https://raw.githubusercontent.com/llvm/llvm-project/main/llvm/docs/requirements.txt > /docs-requirements.txt \
   && pip3 install -r /docs-requirements.txt \
   && rm /docs-requirements.txt
-ENV CCACHE_DIR=/ccache
+ENV LC_ALL=C
 RUN ln -sf /llvm-install/bin/clang /usr/bin/cc && \
   ln -sf /llvm-install/bin/clang++ /usr/bin/c++ && \
   ln -sf /llvm-install/bin/ld.lld /usr/bin/ld
