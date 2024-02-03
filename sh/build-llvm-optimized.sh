@@ -11,6 +11,9 @@ cmake -G Ninja /llvm-project/llvm \
   -DCMAKE_INSTALL_PREFIX="/llvm-install" \
   -DLLVM_ENABLE_PROJECTS="bolt;clang;lld;lldb;clang-tools-extra" \
   -DLLVM_DISTRIBUTION_COMPONENTS="lld;clangd;compiler-rt;lldb;liblldb;lldb-argdumper;lldb-server;clang-format" \
-  -DCLANG_DEFAULT_LINKER="lld"
+  -DCLANG_DEFAULT_LINKER="lld" \
+  -DBOOTSTRAP_CLANG_PGO_TRAINING_DATA_SOURCE_DIR=/llvm-project/llvm
 ninja stage2-clang-bolt stage2-install-distribution
 ninja install-distribution
+cd ..
+rm -rf ./build
