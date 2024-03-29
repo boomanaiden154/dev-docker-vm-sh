@@ -1,5 +1,5 @@
 FROM tensorflow/tensorflow:2.14.0-gpu
-RUN apt-get update && apt-get install -y clang git curl libpfm4-dev golang flex bison libelf-dev libtraceevent-dev libdw-dev libunwind-dev libdwarf-dev libc6-dbg
+RUN apt-get update && apt-get install -y clang git curl libpfm4-dev golang flex bison libelf-dev libtraceevent-dev libdw-dev libunwind-dev libdwarf-dev libc6-dbg vim
 ARG bazelisk_version=1.19.0
 RUN curl -L https://github.com/bazelbuild/bazelisk/releases/download/v${bazelisk_version}/bazelisk-linux-amd64 > /usr/bin/bazelisk && chmod +x /usr/bin/bazelisk && ln -s /usr/bin/bazelisk /usr/bin/bazel
 COPY custom-cert.crt /usr/local/share/ca-certificates
