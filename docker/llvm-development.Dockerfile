@@ -61,3 +61,4 @@ RUN ln -sf /llvm-install/bin/clang /usr/bin/cc && \
   ln -sf /llvm-install/bin/ld.lld /usr/bin/ld
 COPY ./sh /sh-utils
 RUN /sh-utils/configure-git.sh
+ENV PATH="${PATH}:/llvm-install/bin"
